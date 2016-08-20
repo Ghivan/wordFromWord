@@ -1879,24 +1879,26 @@ GAME.results = (function () {
 
         button.innerHTML = 'Улучшить результат';
         button.setAttribute('class', 'resultButton');
-
-        (function (level) {
-            button.addEventListener('click', function () {
+        
+        function doBetter(level) {
                 GAME.utils.clearChildNodes(GAME.view.gameContainer);
                 GAME.controller.setLevel(level);
                 GAME.view.gameContainer.appendChild(GAME.view.combinedGameField);
-            })
-        })(i + 1)
+            }
+        
+        (function (level) {
+            button.addEventListener('click', doBetter.bind(null, level));
+        })(i + 1);
 
         container.appendChild(header);
         container.appendChild(scoreContainer);
         container.appendChild(button);
-
-        resultContainer.appendChild(view.menu.smallView.cloneNode(true)).addEventListener('click', function () {
-            view.showWithBackground(view.menu.container)
-        });
         resultContainer.appendChild(container);
     }
+    
+    resultContainer.appendChild(view.menu.smallView.cloneNode(true)).addEventListener('click', function () {
+            view.showWithBackground(view.menu.container)
+        });
 
     var tableScoreContainer = document.createElement('div'),
         listOfRecords = document.createElement('ol');
@@ -1921,6 +1923,9 @@ GAME.results = (function () {
             for (var i in level) {
                 if (level.hasOwnProperty(i)) {
                     updateableBlocks[i].innerHTML = 'Отгадано ' + Math.floor(userFoundWords[i - 1] / totalWords[i - 1] * 100) + '% слов';
+                    if (userFoundWords[i - 1] === totalWords[i - 1]){
+                        resultContainer.childNodes[i].getElementsByClassName('resultButton')[0].innerHTML = 'Полюбоваться!';
+                    }
                 }
             }
             GAME.view.gameContainer.appendChild(GAME.results.rcontainer)
@@ -1929,7 +1934,7 @@ GAME.results = (function () {
 
         /**
          * подсчет результатов прохождения.
-         * @method GAME.results.showResults
+         * @method GAME.results.calculate
          */
         calculate: function () {
             var level = GAME.namespace('GAME.model.level'),
