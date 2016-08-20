@@ -1623,134 +1623,142 @@ GAME.controller = (function () {
      * @param {HTML-элемент} letter
      * Элемент с буквой.
      */
-    controller.play = function (letter) {
-            var utils = GAME.namespace('GAME.utils'),
-                model = GAME.namespace('GAME.model'),
-                view = GAME.namespace('GAME.view'),
-                level = model.level[model.currentLevel],
-                variants; //Возможные варианты слов из слова уровня
+    controller.play = (function () {
+            var cancelClick = false;
 
-            if (utils.locateClass(letter, 'active')) {
-                //Буква уже была выбрана
-                if (Number(letter.dataset.order) === model.userWord.length) {
-                    model.userWord = model.userWord.substr(0, model.userWord.length - 1);
-                    view.gameField.userWord.textContent = model.userWord;
-                    letter.dataset.order = 0; //Порядковый номер нажатой буквы
-                    utils.removeClass(letter, 'active');
-
-                }
-            } else {
-                //Невыбранная буква
-                utils.setClass(letter, 'active');
-                model.userWord += letter.textContent;
-                letter.dataset.order = model.userWord.length; //Порядковый номер нажатой буквы
-                view.gameField.userWord.textContent = model.userWord;
-
-                if (model.userWord.length < 3) return;
-
-                variants = dictionary.getVariants(level.wordForLevel)
-
-                if (variants.indexOf(model.userWord) !== -1) {
-                    if (level.foundWords.indexOf(model.userWord) === -1) {
-                        //Новое найденное слово
-                        GAME.sounds.foundWord.play();
-                        level.foundWords.push(model.userWord);
-                        view.gameField.foundWords.addFoundWord(model.userWord);
-                        view.gameInfo.progressBar.setBar(level.foundWords.length, variants.length);
-                        controller.missions.check(model.userWord);
-
-                        //Начисление очков
-                        var BASEBID = 10;
-                        if (model.userWord.length <= 3) {
-                            model.score += model.userWord.length * BASEBID;
-                        } else if (model.userWord.length <= 5) {
-                            model.score += Math.floor(model.userWord.length * BASEBID * 1.25);
-                        } else if (model.userWord.length <= 7) {
-                            model.score += Math.floor(model.userWord.length * BASEBID * 1.50);
-                        } else if (model.userWord.length <= 9) {
-                            model.score += Math.floor(model.userWord.length * BASEBID * 1.75);
-                        } else {
-                            model.score += Math.floor(model.userWord.length * BASEBID * 2);
-                        }
-                        view.gameInfo.score.setHeading(model.score);
-                        controller.tips.update();
-
-                        //Очистка игрового поля для нового выбора и старт анимации
-                        model.userWord = '';
+            return function (letter) {
+                var utils = GAME.namespace('GAME.utils'),
+                    model = GAME.namespace('GAME.model'),
+                    view = GAME.namespace('GAME.view'),
+                    level = model.level[model.currentLevel],
+                    variants; //Возможные варианты слов из слова уровня
+                if (cancelClick) return;
+                cancelClick = true;
+                setTimeout(function () {
+                    cancelClick = false;
+                }, 200)
+                if (utils.locateClass(letter, 'active')) {
+                    //Буква уже была выбрана
+                    if (Number(letter.dataset.order) === model.userWord.length) {
+                        model.userWord = model.userWord.substr(0, model.userWord.length - 1);
                         view.gameField.userWord.textContent = model.userWord;
-                        var timer = 0,
-                            list = view.gameField.levelWord.container.childNodes;
-                        for (var i = 0; i < list.length; i++) {
-                            if (utils.locateClass(list[i], 'active')) {
+                        letter.dataset.order = 0; //Порядковый номер нажатой буквы
+                        utils.removeClass(letter, 'active');
 
-                                list[i].dataset.order = 0;
+                    }
+                } else {
+                    //Невыбранная буква
+                    utils.setClass(letter, 'active');
+                    model.userWord += letter.textContent;
+                    letter.dataset.order = model.userWord.length; //Порядковый номер нажатой буквы
+                    view.gameField.userWord.textContent = model.userWord;
 
-                                (function (a, b) {
-                                    setTimeout(function () {
-                                        utils.setClass(a, 'rotate');
-                                    }, b)
+                    if (model.userWord.length < 3) return;
 
-                                    setTimeout(function () {
-                                        utils.removeClass(a, 'rotate')
-                                        utils.removeClass(a, 'active');
+                    variants = dictionary.getVariants(level.wordForLevel)
 
-                                    }, 1500 + b);
+                    if (variants.indexOf(model.userWord) !== -1) {
+                        if (level.foundWords.indexOf(model.userWord) === -1) {
+                            //Новое найденное слово
+                            GAME.sounds.foundWord.play();
+                            level.foundWords.push(model.userWord);
+                            view.gameField.foundWords.addFoundWord(model.userWord);
+                            view.gameInfo.progressBar.setBar(level.foundWords.length, variants.length);
+                            controller.missions.check(model.userWord);
 
-
-                                })(list[i], timer)
-
-                                timer += 100;
-                            }
-                        }
-
-                        //Проверка возможности перехода на новый уровень
-                        if (level.foundWords.length === Math.floor(variants.length * 0.3)) {
-                            if (model.currentLevel < model.wordsForLevel.length) {
-                                view.gameInfo.levelMap.setActive(model.currentLevel + 1);
-                                view.advices.showAdvice('Вы можете перейти на следующий уровень (воспользуйтесь картой уровней)');
-                                model.level[model.currentLevel + 1] = {
-                                    foundWords: []
-                                }
+                            //Начисление очков
+                            var BASEBID = 10;
+                            if (model.userWord.length <= 3) {
+                                model.score += model.userWord.length * BASEBID;
+                            } else if (model.userWord.length <= 5) {
+                                model.score += Math.floor(model.userWord.length * BASEBID * 1.25);
+                            } else if (model.userWord.length <= 7) {
+                                model.score += Math.floor(model.userWord.length * BASEBID * 1.50);
+                            } else if (model.userWord.length <= 9) {
+                                model.score += Math.floor(model.userWord.length * BASEBID * 1.75);
                             } else {
-                                view.advices.showAdvice('Поздравляем! Вы прошли все уровни!');
-                                view.gameInfo.container.appendChild(GAME.results.buttonScore);
+                                model.score += Math.floor(model.userWord.length * BASEBID * 2);
+                            }
+                            view.gameInfo.score.setHeading(model.score);
+                            controller.tips.update();
+
+                            //Очистка игрового поля для нового выбора и старт анимации
+                            model.userWord = '';
+                            view.gameField.userWord.textContent = model.userWord;
+                            var timer = 0,
+                                list = view.gameField.levelWord.container.childNodes;
+                            for (var i = 0; i < list.length; i++) {
+                                if (utils.locateClass(list[i], 'active')) {
+
+                                    list[i].dataset.order = 0;
+
+                                    (function (a, b) {
+                                        setTimeout(function () {
+                                            utils.setClass(a, 'rotate');
+                                        }, b)
+
+                                        setTimeout(function () {
+                                            utils.removeClass(a, 'rotate')
+                                            utils.removeClass(a, 'active');
+
+                                        }, 1500 + b);
+
+
+                                    })(list[i], timer)
+
+                                    timer += 100;
+                                }
+                            }
+
+                            //Проверка возможности перехода на новый уровень
+                            if (level.foundWords.length === Math.floor(variants.length * 0.3)) {
+                                if (model.currentLevel < model.wordsForLevel.length) {
+                                    view.gameInfo.levelMap.setActive(model.currentLevel + 1);
+                                    view.advices.showAdvice('Вы можете перейти на следующий уровень (воспользуйтесь картой уровней)');
+                                    model.level[model.currentLevel + 1] = {
+                                        foundWords: []
+                                    }
+                                } else {
+                                    view.advices.showAdvice('Поздравляем! Вы прошли все уровни!');
+                                    view.gameInfo.container.appendChild(GAME.results.buttonScore);
+                                    GAME.results.addScoreToTable(model.userName, model.score);
+                                }
+                            }
+
+                            if (level.foundWords.length === variants.length) {
+                                view.advices.showAdvice('Все слова уровня отгадны!');
+                            }
+
+                            if (model.level[model.wordsForLevel.length] && model.level[model.wordsForLevel.length].foundWords && (model.level[model.wordsForLevel.length].foundWords.length >= Math.floor(variants.length * 0.3))) {
                                 GAME.results.addScoreToTable(model.userName, model.score);
                             }
-                        }
 
-                        if (level.foundWords.length === variants.length) {
-                            view.advices.showAdvice('Все слова уровня отгадны!');
-                        }
+                            controller.storeResults(model.userName); //Сохранение результатов
 
-                        if (model.level[model.wordsForLevel.length] && model.level[model.wordsForLevel.length].foundWords && (model.level[model.wordsForLevel.length].foundWords.length >= Math.floor(variants.length * 0.3))) {
-                            GAME.results.addScoreToTable(model.userName, model.score);
-                        }
+                        } else {
+                            //Слово уже было найдено
+                            var elem = document.getElementById(model.userWord),
+                                elemStyle = window.getComputedStyle(elem).backgroundColor;
 
-                        controller.storeResults(model.userName); //Сохранение результатов
+                            if (elemStyle != "rgb(255, 255, 0)") {
+                                elem.style.backgroundColor = 'yellow';
 
-                    } else {
-                        //Слово уже было найдено
-                        var elem = document.getElementById(model.userWord),
-                            elemStyle = window.getComputedStyle(elem).backgroundColor;
+                                function returnBackground(style) {
+                                    elem.style.backgroundColor = style;
+                                }
 
-                        if (elemStyle != "rgb(255, 255, 0)") {
-                            elem.style.backgroundColor = 'yellow';
-
-                            function returnBackground(style) {
-                                elem.style.backgroundColor = style;
+                                setTimeout(function () {
+                                    returnBackground(elemStyle);
+                                }, 1000)
                             }
-
-                            setTimeout(function () {
-                                returnBackground(elemStyle);
-                            }, 1000)
                         }
                     }
+
+
                 }
 
-
             }
-
-        }
+        })()
         /**
          * Управление бонусами и задачами игры.
          * @namespace {object} GAME.controller.missions
