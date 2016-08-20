@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Игра: "Слова из слова"</title>
+    <link href="styles/reset.css" rel="stylesheet" type="text/css">
+    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <script src="scripts/dictionary.js" type="text/javascript"></script>
+    <script src="scripts/game.js" type="text/javascript"></script>
+
+    <script>
+        GAME.init('gamefield');
+    </script>
+</head>
+
+<body>
+    <div id="gamefield"></div>
+    <div id="help">
+        <h2>Правила</h2>
+        <div class='textGuide'>
+            <p>Необходимо составлять слова из показанного на экране слова. Слово должно быть нарицательным именем существительным в единственном числе. Уменьшительно-ласкательные формы, а также сокращения не принимаются. Минимальная длина слова - 3 буквы.</p>
+        </div>
+        <h2>Управление</h2>
+        <div class='textGuide'>
+            <p>Чтобы выбрать букву, кликните мышкой. Повторный клик по последней выбранной букве снимает выделение.</p>
+            <p>Клавиша Esc отменяет ввод всего слова.</p>
+            <p>Клавиша Backspace (&#8592;) отменяет ввод последней буквы.</p>
+        </div>
+        <h2>Игровые бонусы</h2>
+        <div class="textGuide">
+            <p>Первая звезда - отгадать 40% возможных слов на уровне. Бонус: 1 000 очков.</p>
+            <p>Вторая звезда - отгадать три слова, начинающихся на ту же букву, что и слово уровня. Бонус: 500 очков.</p>
+            <p>Третья звезда - отгадать все возможные слова на уровне. Бонус: 50 000 очков.</p>
+        </div>
+        <h2>Подсказки</h2>
+        <div>
+            <img src="images/icons/tips/definition.png">
+            <p>Показать определение неотгаданного слова. Стоимость подсказки: 100 очков</p>
+        </div>
+        <div>
+            <img src="images/icons/tips/word.png">
+            <p>Показать неотгаданное слово. Стоимость подсказки: 500 очков.</p>
+        </div>
+        <h2>Элементы интерфейса</h2>
+        <div>
+            <img src="images/icons/buttons_small/soundON.png">
+            <p>Управление звуком.</p>
+        </div>
+        <div>
+            <img src="images/icons/buttons_small/menuButton.png">
+            <p>Вызов игрового меню.</p>
+        </div>
+        <div>
+            <progress max="10" value="3"></progress>
+            <p>Прогресс на уровне.</p>
+        </div>
+    </div>
+</body>
+
+</html>

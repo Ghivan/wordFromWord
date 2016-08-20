@@ -1,0 +1,503 @@
+@font-face {
+    font-family: 'RupsterScriptFree';
+    src: url('Fonts/RupsterScriptFree/RupsterScriptFree.eot?#iefix') format('embedded-opentype'), url('Fonts/RupsterScriptFree/RupsterScriptFree.woff') format('woff'), url('Fonts/RupsterScriptFree/RupsterScriptFree.ttf') format('truetype'), url('Fonts/RupsterScriptFree/RupsterScriptFree.svg#RupsterScriptFree') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu Condensed';
+    src: url('Fonts/Ubuntu Condensed/Ubuntu Condensed.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'FTYVarogeSaroNoestNCV';
+    src: url('Fonts/FTYVarogeSaroNoestNCV/FTYVarogeSaroNoestNCV.eot?#iefix') format('embedded-opentype'), url('Fonts/FTYVarogeSaroNoestNCV/FTYVarogeSaroNoestNCV.woff') format('woff'), url('Fonts/FTYVarogeSaroNoestNCV/FTYVarogeSaroNoestNCV.ttf') format('truetype'), url('Fonts/FTYVarogeSaroNoestNCV/FTYVarogeSaroNoestNCV.svg#FTYVarogeSaroNoestNCV') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+body {
+    background-color: #DED4B9;
+    font-size: 10pt;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+#gamefield {
+    padding: 15px;
+    min-width: 1044px;
+    width: 75%;
+    margin: auto;
+}
+
+
+/*Затемненный фон для всплывающих меню*/
+
+.background {
+    background-color: rgba(70, 67, 58, .9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.background>div {
+    display: inline-block;
+    font-size: 130%;
+    border: 2px solid #46433A;
+    margin-top: 250px;
+    padding: 20px;
+    width: 20%;
+    background-color: #DED4B9;
+    border-radius: 15px;
+}
+
+
+/*Главное меню игры*/
+
+.mainMenu {
+    padding: 20px;
+    width: 30%;
+    font-size: 150%;
+    margin: auto;
+    text-align: center;
+    background-color: #DED4B9;
+    border-radius: 15px;
+}
+
+.mainMenu h1 {
+    font-size: 200%;
+    font-family: 'RupsterScriptFree';
+    font-weight: 200;
+    padding: 0 25px 25px 25px;
+    vertical-align: text-bottom;
+    color: #CE534D;
+}
+
+.mainMenu div {
+    padding: 15px;
+    border: 2px solid #46433A;
+    border-radius: 15px;
+    width: 70%;
+    margin: 15px auto;
+}
+
+.mainMenu div:hover {
+    background-color: #e3efee;
+    cursor: pointer;
+}
+
+.background .mainMenu {
+    display: inline-block;
+    border: 2px solid #46433A;
+    margin-top: 80px;
+    padding-bottom: 50px;
+    width: 30%;
+}
+
+
+/*Форма ввода имени игрока*/
+
+.gameForm {
+    display: inline-block;
+    min-width: 300px;
+    margin-top: 100px;
+    width: 20%;
+    background-color: #DED4B9;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 130%;
+    padding: 10px;
+}
+
+.gameForm label {
+    display: block;
+    padding: 5px;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    color: #46433A;
+}
+
+.gameForm input {
+    background-color: #DED4B9;
+    border-color: #72716d;
+    padding: 5px;
+    font-family: 'Ubuntu Condensed';
+    font-size: 120%;
+}
+
+.gameForm input:focus {
+    outline-color: #46433A;
+    outline-style: groove;
+}
+
+.gameForm .menuButton {
+    display: inline-block;
+    padding: 5px;
+    border: 2px solid #46433A;
+    border-radius: 15px;
+    width: 30%;
+    margin: 15px;
+}
+
+.gameForm .menuButton:hover {
+    background-color: #e3efee;
+    cursor: pointer;
+}
+
+.gameForm .menuButton:active {
+    background-color: #64B6B1;
+    cursor: pointer;
+}
+
+
+/*Информационное поле игры*/
+
+.gameInfo {
+    font-family: 'FTYVarogeSaroNoestNCV';
+    ;
+    width: 20%;
+    float: left;
+    font-size: 130%;
+    position: relative;
+    padding: 10px;
+}
+
+.gameInfo>div,
+.gameInfo>progress,
+.gameInfo>h1,
+.tips>h2 {
+    margin: 15px 0;
+}
+
+.gameInfo h1 {
+    font-size: 200%;
+    font-family: 'RupsterScriptFree';
+    font-weight: 200;
+    padding: 10px 0;
+    vertical-align: text-bottom;
+    color: #CE534D;
+}
+
+.gameInfo .userName,
+.gameInfo .currentLevel,
+.gameInfo .score,
+.gameInfo .tips>h2,
+.gameInfo .menuLabel {
+    color: #64B6B1;
+    font-weight: 600;
+}
+
+.gameInfo .userName>span,
+.gameInfo .currentLevel>span,
+.gameInfo .score>span {
+    display: block;
+    margin: 5px 0;
+    font-weight: 800;
+    color: #46433A;
+}
+
+.gameInfo .menuLevel .menuLabel,
+.gameInfo .tips img {
+    cursor: pointer;
+}
+
+.gameInfo .menuLevel .levelMap {
+    position: absolute;
+    left: 0;
+    max-width: 170px;
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #DED4B9;
+    background-color: #72716d;
+}
+
+.gameInfo .menuLevel .levelMap a.levelButton {
+    display: inline-block;
+    margin: 5px;
+    height: 40px;
+    width: 40px;
+    border: 2px solid gray;
+    border-radius: 15px;
+    line-height: 40px;
+    color: gray
+}
+
+.gameInfo .menuLevel .levelMap a.reached {
+    border-color: #46433A;
+    color: #64B6B1;
+    cursor: pointer;
+}
+
+.gameInfo .menuLevel .levelMap a.reached:hover {
+    background-color: #e3efee;
+    cursor: pointer;
+}
+
+.gameInfo progress {
+    max-width: 200px;
+}
+
+
+/*Игровое поле*/
+
+.gameField {
+    width: 79.5%;
+    margin-left: 20%;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+}
+
+.gameField .missions {
+    width: 200px;
+    display: inline-block;
+    margin: auto;
+}
+
+.gameField .missions img,
+.gameField .buttonGroup img {
+    margin: 0 5px;
+    border: 1px solid #DED4B9;
+}
+
+.gameField .buttonGroup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+}
+
+.gameField .buttonGroup img:hover {
+    cursor: pointer;
+    border-color: #46433A;
+    border-radius: 15px;
+}
+
+.gameField .userWord {
+    font-size: 300%;
+    letter-spacing: 10px;
+    min-height: 80px;
+    text-transform: uppercase;
+    margin-top: 100px;
+}
+
+.gameField .levelWord {
+    margin: 20px auto;
+}
+
+.gameField .levelWord .letter {
+    font-size: 200%;
+    font-family: 'FTYVarogeSaroNoestNCV';
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    border: 3px solid #72716d;
+    background-color: #e3efee;
+    color: #5c5b56;
+    text-align: center;
+    line-height: 40px;
+    margin: auto 5px;
+    cursor: pointer;
+}
+
+.gameField .levelWord .active {
+    background-color: #46433A;
+    color: #64B6B1;
+    font-weight: bold;
+}
+
+.gameField .levelWord .rotate {
+    animation-name: rotateLetters;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes rotateLetters {
+    from {
+        transform: rotate3d(0, 1, 0, 0deg);
+    }
+    to {
+        transform: rotate3d(0, 1, 0, 360deg);
+        font-weight: normal;
+        background-color: #e3efee;
+        color: #5c5b56;
+    }
+}
+
+.gameField .foundWords {
+    text-align: left;
+    vertical-align: top;
+}
+
+.gameField .foundWords>div {
+    margin: 20px 10px;
+}
+
+.gameField .foundWords>div h3 {
+    border-bottom: 1px solid #46433A;
+    margin-bottom: 10px;
+    font-size: 130%;
+    padding-bottom: 5px;
+    color: #46433A;
+}
+
+.gameField .foundWord {
+    font-size: 150%;
+    display: inline-block;
+    border: 1px solid #46433A;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+
+/*Помощь*/
+
+#help {
+    font-family: 'Ubuntu Condensed', sans-serif;
+    width: 40%;
+    font-size: 130%;
+    margin: auto;
+    text-align: center;
+    background-color: #DED4B9;
+    border-radius: 15px;
+    display: none;
+    margin-top: 80px;
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+#help h2 {
+    color: #64B6B1;
+    font-weight: 600;
+}
+
+#help div {
+    clear: both;
+    margin: 10px auto;
+    width: 70%;
+    vertical-align: middle;
+}
+
+#help div p {
+    margin-left: 65px;
+    min-height: 60px;
+    text-align: justify;
+}
+
+#help div.textGuide p {
+    margin-left: 0;
+    text-indent: 15px;
+    min-height: 0;
+}
+
+#help div img {
+    float: left;
+    width: 30px;
+}
+
+#help div progress {
+    width: 60px;
+    float: left;
+    margin-left: 0;
+}
+
+.results {
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.results>div {
+    width: 150px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+.results>div:first-of-type {
+    margin-left: 0;
+}
+
+.results>h2 {
+    color: #64B6B1;
+    font-weight: 600;
+    font-size: 150%;
+}
+
+.resultButton {
+    text-align: center;
+    padding: 5px;
+    border: 2px solid #46433A;
+    border-radius: 15px;
+    width: 70%;
+    margin: 5px auto;
+}
+
+.resultButton:hover {
+    background-color: #e3efee;
+    cursor: pointer;
+}
+
+.background .tableScore {
+    font-family: 'Ubuntu Condensed', sans-serif;
+    width: 20%;
+    font-size: 130%;
+    margin: auto;
+    text-align: center;
+    background-color: #DED4B9;
+    border-radius: 15px;
+    margin-top: 80px;
+    max-height: 300px;
+}
+
+.background .tableScore ol {
+    list-style-position: inside;
+    font-family: 'RupsterScriptFree';
+    color: #CE534D;
+    font-weight: 700;
+}
+
+.background .tableScore li {
+    margin: 10px auto;
+}
+
+.tableScore li span:last-of-type {
+    font-size: 90%;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    margin-top: 2px;
+    font-weight: bold;
+    color: #64B6B1
+}
+
+.tableScore span {
+    display: block;
+}
+.results>img{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 0 5px;
+    border: 1px solid #DED4B9;
+}
+
+.results>img:hover{
+    cursor: pointer;
+    border-color: #46433A;
+    border-radius: 15px;
+}

@@ -1,0 +1,34 @@
+{
+    
+   "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+
+    "templates": {
+        "systemName": "Игра 'Слова из Слова'",
+        "footer": "<a href='mailto:ghivan.iv@gmail.com' style='margin-left:20px'>ghivan.iv@gmail.com</a>",
+        "copyright": "Евстифеев",
+        "includeDate": "false",
+        "navType": "vertical",
+        "theme": "cerulean",
+        "linenums": "true",
+        "collapseSymbols": "true",
+        "inverseNav": "false",
+        "outputSourceFiles": "true",
+        "outputSourcePath": "true",
+        "dateFormat": "LT",
+        "syntaxTheme": "dark",
+        "sort": "longname"
+    },
+    
+    "plugins": [
+    "plugins/markdown",
+    "plugins/summarize"
+]
+    
+}
