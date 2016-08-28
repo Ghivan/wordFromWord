@@ -171,10 +171,8 @@ GAME.utils = {
 
         } else if (Array.isArray(object)) {
 
-            clone = [];
-            for (var i = 0; i < object.length; i++) {
-                clone[i] = createClone(object[i]);
-            }
+            clone = object.slice(0);
+    
 
         } else {
 
@@ -1394,8 +1392,8 @@ GAME.controller = (function () {
 
 
             var results = JSON.parse(window.localStorage[name]),
-                maxLevel = 1;
-            var levelMap = view.gameInfo.levelMap.getButtons();
+                maxLevel = 1,
+                levelMap = view.gameInfo.levelMap.getButtons();
             for (var i = 0; i < levelMap.length; i++) {
                 GAME.utils.removeClass(levelMap[i], 'reached');
             }
