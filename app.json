@@ -1,0 +1,16 @@
+{
+  "name": "wordFromWord",
+  "description": "123123",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
